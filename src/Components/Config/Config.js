@@ -24,8 +24,14 @@ const Config = props => {
         props.removeIncrement(val);
     }
 
+    const handleIncrementInputChange = event => {
+        if (event.currentTarget.checkValidity()) {
+            setNum(event.target.value);
+        }
+    }
+
     const handleIncrementInputKeyup = event => {
-        if (event.key === 'Enter') {
+        if (event.currentTarget.checkValidity() && event.key === 'Enter') {
             handleAddIncrement();
         }
     }
@@ -52,11 +58,12 @@ const Config = props => {
             <InputGroup className="mb-3">
                 <FloatingLabel
                     controlId="floatingInput"
-                    label="Enter a number"
+                    label="Enter a unique whole number"
                 >
-                    <Form.Control type="number" placeholder="Enter a number"
+                    <Form.Control type="number" placeholder="Enter a unique whole number"
+                                  min="0" step="1" pattern="\d*"
                                   ref={numInputRef}
-                                  onChange={event => setNum(event.target.value)}
+                                  onChange={handleIncrementInputChange}
                                   onKeyUp={handleIncrementInputKeyup}/>
                 </FloatingLabel>
 

@@ -35,11 +35,20 @@ function App() {
         return a - b;
     }
 
-    const handleIncrementScore = (name, amount) => {
+    const handleAddScore = (name, amount) => {
         const updatedPlayers = [...players];
         const updatedPlayer = updatedPlayers.filter(player => player.name === name)[0];
 
         updatedPlayer.scores = [...updatedPlayer.scores, amount];
+
+        setPlayers(updatedPlayers);
+    }
+
+    const handleRemoveScore = (name, index) => {
+        const updatedPlayers = [...players];
+        const updatedPlayer = updatedPlayers.filter(player => player.name === name)[0];
+
+        updatedPlayer.scores.splice(index, 1);
 
         setPlayers(updatedPlayers);
     }
@@ -84,7 +93,8 @@ function App() {
                 <Scoreboard
                     players={players}
                     increments={increments}
-                    incrementScore={handleIncrementScore}
+                    addScore={handleAddScore}
+                    removeScore={handleRemoveScore}
                 />
             </Row>
         </Container>

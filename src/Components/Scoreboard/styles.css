@@ -13,3 +13,30 @@
 .score-table .tr-border-bottom {
     border-bottom: 2px solid var(--bs-primary);
 }
+
+.badge.score-badge {
+    display: none;
+}
+
+.badge.score-badge:last-child,
+.badge.score-badge:nth-last-child(2),
+.badge.score-badge:nth-last-child(3),
+.badge.score-badge:nth-last-child(4),
+.badge.score-badge:nth-last-child(5) {
+    display: inline-block;
+}
+
+.score-badge:hover {
+    cursor: pointer;
+}
+
+.score-badge:hover span:last-child {
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+    border-radius: var(--bs-badge-border-radius);
+}
+
+.score-badge span {
+    font-weight: bold;
+}
