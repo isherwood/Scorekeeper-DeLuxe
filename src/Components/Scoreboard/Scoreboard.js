@@ -78,7 +78,7 @@ const Scoreboard = props => {
                                 <div className='score-bg-lower position-absolute'
                                      style={getRowStyles(getScore(player.scores))}></div>
 
-                                <span><IoEllipsisHorizontalSharp/> </span>
+                                {player.scores.length > 5 && <span><IoEllipsisHorizontalSharp/> </span>}
 
                                 <span className='text-nowrap'>
                                 {player.scores.length > 0 && player.scores.map((score, i) => (

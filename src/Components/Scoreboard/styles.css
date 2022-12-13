@@ -21,7 +21,7 @@
     width: 0;
     height: calc(100% + 2px); /* deal with Bootstrap's cell border-bottom-width */
     z-index: -1;
-    background: linear-gradient(to right, #fff 0%, rgba(146, 0, 170, 0.5) 100%);
+    background: linear-gradient(to right, #fff 0%, rgba(182, 135, 16, 0.5) 100%);
     transition: width 0.5s;
 }
 
