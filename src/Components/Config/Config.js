@@ -68,11 +68,11 @@ const Config = props => {
             {props.increments.length > 0 && <p className='form-text m-0'>Click to remove.</p>}
 
             {props.increments.map(inc => (
-                <span className='badge bg-primary position-relative inc-badge fw-normal me-2 my-1 px-3 cursor-pointer'
+                <span className='badge bg-primary position-relative inc-badge fw-normal me-2 my-1 px-3 cursor-pointer overflow-hidden'
                       key={inc}
                       onClick={() => handleRemoveIncrement(inc)}>
                     <span className='lead'>{inc}</span>
-                    <span className='lead position-absolute start-0 top-0 w-100 h-100 d-none'>
+                    <span className='lead bg-danger position-absolute start-0 top-0 w-100 h-100 d-none'>
                         <MdCancel color='white'/>
                     </span>
                 </span>
@@ -100,12 +100,12 @@ const Config = props => {
             {props.players.length > 0 && <p className='form-text m-0'>Click to remove.</p>}
 
             {props.players.map(player => (
-                <span className='badge bg-primary position-relative inc-badge fw-normal me-2 my-1 px-3 cursor-pointer'
+                <span className='badge bg-primary position-relative inc-badge fw-normal me-2 my-1 px-3 cursor-pointer overflow-hidden'
                       key={player.name}
                       onClick={() => props.removePlayer(player.name)}>
-                <span className='lead'>{player.name}</span>
-                <span className='lead position-absolute start-0 top-0 w-100 h-100 d-none'>
-                    <MdCancel color='white'/>
+                    <span className='lead'>{player.name}</span>
+                    <span className='lead bg-danger position-absolute start-0 top-0 w-100 h-100 d-none'>
+                        <MdCancel color='white'/>
                     </span>
                 </span>
             ))}
