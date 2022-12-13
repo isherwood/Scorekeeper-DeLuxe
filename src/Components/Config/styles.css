@@ -1,0 +1,17 @@
+.inc-badge:hover {
+    cursor: pointer;
+}
+
+.inc-badge:hover span:first-child {
+    opacity: 0;
+}
+
+.inc-badge:hover span:last-child {
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+}
+
+.inc-badge span {
+    font-weight: bold;
+}
