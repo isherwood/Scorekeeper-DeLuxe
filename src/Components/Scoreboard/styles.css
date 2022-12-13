@@ -14,6 +14,21 @@
     border-bottom: 2px solid var(--bs-primary);
 }
 
+.score-table .score-bg-upper,
+.score-table .score-bg-lower {
+    top: -1px; /* deal with Bootstrap's cell border-bottom-width */
+    left: 0;
+    width: 0;
+    height: calc(100% + 2px); /* deal with Bootstrap's cell border-bottom-width */
+    z-index: -1;
+    background: linear-gradient(to right, #fff 0%, rgba(146, 0, 170, 0.5) 100%);
+    transition: width 0.5s;
+}
+
+.score-table .score-bg-lower {
+    top: 1px; /* deal with Bootstrap's cell border-bottom-width */
+}
+
 .badge.score-badge {
     display: none;
 }

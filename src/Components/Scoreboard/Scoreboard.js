@@ -4,6 +4,7 @@ import {Badge, Button, Col, Table} from "react-bootstrap";
 import './styles.css';
 import {useEffect, useState} from "react";
 import {MdCancel} from "react-icons/md";
+import {IoEllipsisHorizontalSharp} from "react-icons/io5";
 
 const Scoreboard = props => {
     const [highScore, setHighScore] = useState();
@@ -17,12 +18,10 @@ const Scoreboard = props => {
     }
 
     const getRowStyles = score => {
-        const portion = score / highScore * 100;
-        const color = 'rgba(146, 0, 170, 0.5)';
+        let portion = score / highScore * 100;
 
         return {
-            background: 'linear-gradient(to right, #fff 0%, ' + color + ' ' + portion + '%,'
-                + '#fff ' + portion + '%)'
+            width: portion + '%'
         }
     }
 
@@ -49,13 +48,17 @@ const Scoreboard = props => {
     }, [props.players]);
 
     return (
-        <Col className='mt-4'>
+        <Col className='mt-2'>
             <Table className='score-table w-100 v-align-middle'>
                 <tbody>
                 {props.players.map(player => (
                     <React.Fragment key={player.name}>
-                        <tr style={getRowStyles(getScore(player.scores))}>
-                            <td rowSpan='2' className='table-cell-min display-6 px-3 text-center'>{player.name}</td>
+                        <tr className='position-relative'>
+                            <td rowSpan='2' className='table-cell-min display-6 px-3 text-center'>
+                                <div className='score-bg-upper position-absolute'
+                                     style={getRowStyles(getScore(player.scores))}></div>
+                                {player.name}
+                            </td>
 
                             <td className='p-1'>
                                 {props.increments.map(num => (
@@ -69,12 +72,17 @@ const Scoreboard = props => {
                             </td>
                         </tr>
 
-                        <tr className='tr-border-bottom' style={getRowStyles(getScore(player.scores))}>
+                        <tr className='position-relative tr-border-bottom'
+                            style={getRowStyles(getScore(player.scores))}>
                             <td>
-                                <span>Latest scores: </span>
+                                <div className='score-bg-lower position-absolute'
+                                     style={getRowStyles(getScore(player.scores))}></div>
 
-                                <span className='text-nowrap text-truncate'>
+                                <span><IoEllipsisHorizontalSharp/> </span>
+
+                                <span className='text-nowrap'>
                                 {player.scores.length > 0 && player.scores.map((score, i) => (
+                                    // Note: all but last few hidden with CSS
                                     <Badge bg='secondary'
                                            className='position-relative score-badge fw-normal me-2
                                                 cursor-pointer'
