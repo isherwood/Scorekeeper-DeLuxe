@@ -3,6 +3,7 @@ import {Button, Col, Container, Offcanvas, Row} from 'react-bootstrap';
 import {MdSettings} from "react-icons/md";
 
 import Config from './Components/Config/Config';
+import Scoreboard from './Components/Scoreboard/Scoreboard'
 import {useState} from 'react';
 
 function App() {
@@ -32,6 +33,15 @@ function App() {
 
     const compareIntegers = (a, b) => {
         return a - b;
+    }
+
+    const handleIncrementScore = (name, amount) => {
+        const updatedPlayers = [...players];
+        const updatedPlayer = updatedPlayers.filter(player => player.name === name)[0];
+
+        updatedPlayer.scores = [...updatedPlayer.scores, amount];
+
+        setPlayers(updatedPlayers);
     }
 
     return (
@@ -71,7 +81,11 @@ function App() {
             </Row>
 
             <Row className='flex-fill'>
-
+                <Scoreboard
+                    players={players}
+                    increments={increments}
+                    incrementScore={handleIncrementScore}
+                />
             </Row>
         </Container>
     );

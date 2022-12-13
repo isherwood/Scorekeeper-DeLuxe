@@ -1,0 +1,15 @@
+.table-cell-min {
+    width: 1px;
+}
+
+.v-align-middle td {
+    vertical-align: middle;
+}
+
+.score-table tr:first-child {
+    border-top: 2px solid var(--bs-primary);
+}
+
+.score-table .tr-border-bottom {
+    border-bottom: 2px solid var(--bs-primary);
+}
