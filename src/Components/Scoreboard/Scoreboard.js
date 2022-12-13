@@ -81,21 +81,25 @@ const Scoreboard = props => {
                                 {player.scores.length > 5 && <span><IoEllipsisHorizontalSharp/> </span>}
 
                                 <span className='text-nowrap'>
-                                {player.scores.length > 0 && player.scores.map((score, i) => (
-                                    // Note: all but last few hidden with CSS
-                                    <Badge bg='secondary'
-                                           className='position-relative score-badge fw-normal me-2
+                                    {player.scores.length < 1 &&
+                                        <Badge className='opacity-0'>0</Badge>
+                                    }
+
+                                    {player.scores.length > 0 && player.scores.map((score, i) => (
+                                        // Note: all but last few hidden with CSS
+                                        <Badge bg='secondary'
+                                               className='position-relative score-badge fw-normal me-2
                                                 cursor-pointer'
-                                           key={Math.random()}
-                                           onClick={() => removeScore(player, i)}
-                                    >
-                                        <span>{score}</span>
-                                        <span
-                                            className='bg-danger position-absolute start-0 top-0 w-100 h-100 d-none'>
+                                               key={Math.random()}
+                                               onClick={() => removeScore(player, i)}
+                                        >
+                                            <span>{score}</span>
+                                            <span
+                                                className='bg-danger position-absolute start-0 top-0 w-100 h-100 d-none'>
                                             <MdCancel color='white'/>
                                         </span>
-                                    </Badge>
-                                ))}
+                                        </Badge>
+                                    ))}
                                 </span>
                             </td>
                         </tr>

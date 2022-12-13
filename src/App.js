@@ -90,12 +90,26 @@ function App() {
             </Row>
 
             <Row className='flex-fill'>
-                <Scoreboard
-                    players={players}
-                    increments={increments}
-                    addScore={handleAddScore}
-                    removeScore={handleRemoveScore}
-                />
+                {players.length > 0 && increments.length > 0 &&
+                    <Scoreboard
+                        players={players}
+                        increments={increments}
+                        addScore={handleAddScore}
+                        removeScore={handleRemoveScore}
+                    />
+                }
+
+                {players.length < 1 && !showOffCanvas &&
+                    <div className='align-self-center text-center'>
+                        Please <Button variant='link' className='px-0 pt-0' onClick={handleShowOffCanvas}>add a player</Button> in the configuration panel.
+                    </div>
+                }
+
+                {players.length > 0 && increments.length < 1 && !showOffCanvas &&
+                    <div className='align-self-center text-center'>
+                        Please <Button variant='link' className='px-0 pt-0' onClick={handleShowOffCanvas}>add a score increment</Button> in the configuration panel.
+                    </div>
+                }
             </Row>
         </Container>
     );

@@ -53,7 +53,39 @@ const Config = props => {
 
     return (
         <>
-            <h3 className='lead'>Score Increments</h3>
+            <h3 className='lead'>Players</h3>
+
+            <InputGroup className="mb-3">
+                <FloatingLabel
+                    controlId="floatingInput"
+                    label="Enter a name"
+                >
+                    <Form.Control type="text" placeholder="Enter a name"
+                                  ref={nameInputRef}
+                                  onChange={event => setName(event.target.value)}
+                                  onKeyUp={handlePlayerInputKeyup}/>
+                </FloatingLabel>
+
+                <Button variant='secondary' onClick={handleAddPlayer}>
+                    <FaUserPlus className='lead'/>
+                </Button>
+            </InputGroup>
+
+            {props.players.length > 0 && <p className='form-text m-0'>Click to remove.</p>}
+
+            {props.players.map(player => (
+                <span
+                    className='badge bg-primary position-relative inc-badge fw-normal me-2 my-1 px-3 cursor-pointer overflow-hidden'
+                    key={player.name}
+                    onClick={() => props.removePlayer(player.name)}>
+                    <span className='lead'>{player.name}</span>
+                    <span className='lead bg-danger position-absolute start-0 top-0 w-100 h-100 d-none'>
+                        <MdCancel color='white'/>
+                    </span>
+                </span>
+            ))}
+
+            <h3 className='lead mt-4'>Score Increments</h3>
 
             <InputGroup className="mb-3">
                 <FloatingLabel
@@ -80,38 +112,6 @@ const Config = props => {
                     key={inc}
                     onClick={() => handleRemoveIncrement(inc)}>
                     <span className='lead'>{inc}</span>
-                    <span className='lead bg-danger position-absolute start-0 top-0 w-100 h-100 d-none'>
-                        <MdCancel color='white'/>
-                    </span>
-                </span>
-            ))}
-
-            <h3 className='lead mt-4'>Players</h3>
-
-            <InputGroup className="mb-3">
-                <FloatingLabel
-                    controlId="floatingInput"
-                    label="Enter a name"
-                >
-                    <Form.Control type="text" placeholder="Enter a name"
-                                  ref={nameInputRef}
-                                  onChange={event => setName(event.target.value)}
-                                  onKeyUp={handlePlayerInputKeyup}/>
-                </FloatingLabel>
-
-                <Button variant='secondary' onClick={handleAddPlayer}>
-                    <FaUserPlus className='lead'/>
-                </Button>
-            </InputGroup>
-
-            {props.players.length > 0 && <p className='form-text m-0'>Click to remove.</p>}
-
-            {props.players.map(player => (
-                <span
-                    className='badge bg-primary position-relative inc-badge fw-normal me-2 my-1 px-3 cursor-pointer overflow-hidden'
-                    key={player.name}
-                    onClick={() => props.removePlayer(player.name)}>
-                    <span className='lead'>{player.name}</span>
                     <span className='lead bg-danger position-absolute start-0 top-0 w-100 h-100 d-none'>
                         <MdCancel color='white'/>
                     </span>
