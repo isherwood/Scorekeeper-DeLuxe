@@ -1,10 +1,10 @@
-import './App.css';
+import {useState} from 'react';
 import {Button, Col, Container, Offcanvas, Row} from 'react-bootstrap';
 import {MdSettings} from "react-icons/md";
 
+import './App.css';
 import Config from './Components/Config/Config';
 import Scoreboard from './Components/Scoreboard/Scoreboard'
-import {useState} from 'react';
 
 function App() {
     const [showOffCanvas, setShowOffCanvas] = useState(true);
@@ -57,7 +57,7 @@ function App() {
         <Container fluid className='app-container d-flex flex-column vh-100'>
             <Row className='align-items-center'>
                 <Col>
-                    <div className='text-center'>
+                    <div className='text-center py-3'>
                         <h1 className='display-5 fst-italic text-primary mb-0 text-nowrap'>Scorekeeper DeLuxe</h1>
                         <span className='text-nowrap text-muted'>A SeaBee Software Production</span>
                     </div>
@@ -101,13 +101,15 @@ function App() {
 
                 {players.length < 1 && !showOffCanvas &&
                     <div className='align-self-center text-center'>
-                        Please <Button variant='link' className='px-0 pt-0' onClick={handleShowOffCanvas}>add a player</Button> in the configuration panel.
+                        Please <Button variant='link' className='px-0 pt-0' onClick={handleShowOffCanvas}>add a
+                        player</Button> in the configuration panel.
                     </div>
                 }
 
                 {players.length > 0 && increments.length < 1 && !showOffCanvas &&
                     <div className='align-self-center text-center'>
-                        Please <Button variant='link' className='px-0 pt-0' onClick={handleShowOffCanvas}>add a score increment</Button> in the configuration panel.
+                        Please <Button variant='link' className='px-0 pt-0' onClick={handleShowOffCanvas}>add a score
+                        increment</Button> in the configuration panel.
                     </div>
                 }
             </Row>

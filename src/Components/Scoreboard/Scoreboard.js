@@ -1,10 +1,9 @@
-import React from 'react';
+import React, {useEffect, useState} from "react";
 import {Badge, Button, Col, Table} from "react-bootstrap";
-
-import './styles.css';
-import {useEffect, useState} from "react";
 import {MdCancel} from "react-icons/md";
 import {IoEllipsisHorizontalSharp} from "react-icons/io5";
+
+import './styles.css';
 
 const Scoreboard = props => {
     const [highScore, setHighScore] = useState();
@@ -48,7 +47,7 @@ const Scoreboard = props => {
     }, [props.players]);
 
     return (
-        <Col className='mt-2'>
+        <Col>
             <Table className='score-table w-100 v-align-middle'>
                 <tbody>
                 {props.players.map(player => (
