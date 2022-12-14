@@ -2,7 +2,6 @@ import {useState} from 'react';
 import {Button, Col, Container, Offcanvas, Row} from 'react-bootstrap';
 import {MdSettings} from "react-icons/md";
 
-import './App.css';
 import Config from './Components/Config/Config';
 import Scoreboard from './Components/Scoreboard/Scoreboard'
 
@@ -10,7 +9,7 @@ function App() {
     const [showOffCanvas, setShowOffCanvas] = useState(true);
     const [players, setPlayers] = useState([]);
     const [increments, setIncrements] = useState([1, 5]);
-    // const [randomizeIncrement, setRandomizeIncrement] = useState(false);
+    const [includeRandomize, setIncludeRandomize] = useState(false);
 
     const handleCloseOffCanvas = () => setShowOffCanvas(false);
     const handleShowOffCanvas = () => setShowOffCanvas(true);
@@ -81,8 +80,8 @@ function App() {
                                 increments={increments}
                                 addIncrement={handleAddIncrement}
                                 removeIncrement={handleRemoveIncrement}
-                                // randomizeIncrement={randomizeIncrement}
-                                // setRandomizeIncrement={val => setRandomizeIncrement(val)}
+                                includeRandomize={includeRandomize}
+                                setRandomize={val => setIncludeRandomize(val)}
                             />
                         </Offcanvas.Body>
                     </Offcanvas>
@@ -96,6 +95,7 @@ function App() {
                         increments={increments}
                         addScore={handleAddScore}
                         removeScore={handleRemoveScore}
+                        includeRandomize={includeRandomize}
                     />
                 }
 

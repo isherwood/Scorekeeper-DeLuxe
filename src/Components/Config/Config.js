@@ -51,6 +51,16 @@ const Config = props => {
         }
     }
 
+    const handleRandomizeChange = event => {
+        if (event.currentTarget.checked) {
+            props.setRandomize(true);
+        } else if (event.currentTarget.classList.contains('badge')) {
+            props.setRandomize(false);
+        } else {
+            props.setRandomize(false);
+        }
+    }
+
     return (
         <>
             <h3 className='lead'>Players</h3>
@@ -117,6 +127,26 @@ const Config = props => {
                     </span>
                 </span>
             ))}
+
+            {props.includeRandomize &&
+                <span
+                    className='badge bg-primary position-relative inc-badge fw-normal me-2 my-1 px-3 cursor-pointer overflow-hidden'
+                    onClick={handleRandomizeChange}>
+                    <span className='lead'>?</span>
+                    <span className='lead bg-danger position-absolute start-0 top-0 w-100 h-100 d-none'>
+                        <MdCancel color='white'/>
+                    </span>
+                </span>
+            }
+
+            {props.increments.length > 0 &&
+                <Form.Check
+                    type="checkbox"
+                    label='Include random score button'
+                    onChange={handleRandomizeChange}
+                    checked={props.includeRandomize}
+                />
+            }
         </>
     )
 }

@@ -4,6 +4,7 @@ import {MdCancel} from "react-icons/md";
 import {IoEllipsisHorizontalSharp} from "react-icons/io5";
 
 import './styles.css';
+import {RiQuestionMark} from "react-icons/ri";
 
 const Scoreboard = props => {
     const [highScore, setHighScore] = useState();
@@ -30,6 +31,10 @@ const Scoreboard = props => {
 
     const removeScore = (player, score) => {
         props.removeScore(player.name, score);
+    }
+
+    const getRandomScore = () => {
+        return props.increments[Math.floor(Math.random() * props.increments.length)];
     }
 
     useEffect(() => {
@@ -64,6 +69,13 @@ const Scoreboard = props => {
                                     <Button variant='primary' className='m-1' key={Math.random()}
                                             onClick={() => addScore(player, num)}>+{num}</Button>
                                 ))}
+
+                                {props.includeRandomize &&
+                                    <Button variant='primary' className='m-1'
+                                            onClick={() => addScore(player, getRandomScore())}>
+                                        +<RiQuestionMark/>
+                                    </Button>
+                                }
                             </td>
 
                             <td rowSpan='2' className='table-cell-min px-3 text-center'>
