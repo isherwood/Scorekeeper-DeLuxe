@@ -13,7 +13,7 @@ const Config = props => {
     const numInputRef = useRef(null);
 
     const handleAddIncrement = () => {
-        if (num && !props.increments.includes(num)) {
+        if (num && !props.increments.includes(parseInt(num))) {
             props.addIncrement(num);
 
             numInputRef.current.value = '';
