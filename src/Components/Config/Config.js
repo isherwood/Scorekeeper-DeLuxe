@@ -14,7 +14,7 @@ const Config = props => {
 
     const handleAddIncrement = () => {
         if (num && !props.increments.includes(parseInt(num))) {
-            props.addIncrement(num);
+            props.addIncrement(parseInt(num));
 
             numInputRef.current.value = '';
         }
