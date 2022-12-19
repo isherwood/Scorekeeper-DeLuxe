@@ -39,17 +39,27 @@ const Scoreboard = props => {
 
     useEffect(() => {
         let highestVal = 0;
+        let winnerName = '';
 
         props.players.forEach(player => {
             const score = getScore(player.scores);
 
             if (score > highestVal) {
                 highestVal = score;
+
+                if (score >= props.winScore) {
+                    winnerName = player.name;
+                }
+            }
+
+            if (winnerName && !props.winnerLocked) {
+                props.setWinnerLocked(true);
+                props.setWinner(winnerName);
             }
 
             setHighScore(highestVal);
         });
-    }, [props.players]);
+    }, [props]);
 
     return (
         <Col>

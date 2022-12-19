@@ -8,6 +8,7 @@ import './styles.css';
 const Config = props => {
     const [name, setName] = useState('');
     const [num, setNum] = useState('');
+    // const [time, setTime] = useState('');
 
     const nameInputRef = useRef(null);
     const numInputRef = useRef(null);
@@ -35,6 +36,18 @@ const Config = props => {
             handleAddIncrement();
         }
     }
+
+    const handleWinInputChange = event => {
+        if (event.currentTarget.checkValidity()) {
+            props.setWinScore(event.target.value);
+        }
+    }
+
+    // const handleTimeInputChange = event => {
+    //     if (event.currentTarget.checkValidity()) {
+    //         setTime(event.target.value);
+    //     }
+    // }
 
     const handleAddPlayer = () => {
         if (name && !props.players.filter(player => player.name === name).length) {
@@ -147,6 +160,28 @@ const Config = props => {
                     checked={props.includeRandomize}
                 />
             }
+
+            <h3 className='lead mt-4'>Optional Features</h3>
+
+            <FloatingLabel
+                controlId="floatingInput"
+                label="Enter a game-winning score"
+            >
+                <Form.Control type="number" placeholder="Enter a game-winning score"
+                              value={props.winScore}
+                              min="0" step="1" pattern="\d*"
+                              onChange={handleWinInputChange}/>
+            </FloatingLabel>
+
+            {/*<FloatingLabel*/}
+            {/*    controlId="floatingInput"*/}
+            {/*    label="Enter a game time in minutes"*/}
+            {/*>*/}
+            {/*    <Form.Control type="number" placeholder="Enter a game time in minutes"*/}
+            {/*                  min="0" step="1" pattern="\d*"*/}
+            {/*                  ref={timeInputRef}*/}
+            {/*                  onChange={handleTimeInputChange}/>*/}
+            {/*</FloatingLabel>*/}
         </>
     )
 }

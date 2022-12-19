@@ -2,8 +2,13 @@ $theme-colors: (
         "primary": #337ab7,
         "secondary": #5bc0de,
         "success": #5cb85c,
+        "info": #b528fc,
         "warning": #f0ad4e,
         "danger": #d9534f
 );
 
 @import '~bootstrap/scss/bootstrap.scss';
+
+.text-bold {
+  font-weight: bold;
+}
