@@ -12,6 +12,7 @@ const Config = props => {
 
     const nameInputRef = useRef(null);
     const numInputRef = useRef(null);
+    const winInputRef = useRef(null);
 
     const handleAddIncrement = () => {
         if (num && !props.increments.includes(parseInt(num))) {
@@ -43,6 +44,13 @@ const Config = props => {
             props.clearWinner();
             props.setWinScore(event.target.value);
         }
+    }
+
+    const handleWinClearBtnClick = () => {
+        winInputRef.current.value = '';
+        props.unlockWinner();
+        props.clearWinner();
+        props.setWinScore(null);
     }
 
     // const handleTimeInputChange = event => {
@@ -91,7 +99,7 @@ const Config = props => {
                                   onKeyUp={handlePlayerInputKeyup}/>
                 </FloatingLabel>
 
-                <Button variant='secondary' onClick={handleAddPlayer}>
+                <Button variant='secondary' onClick={handleAddPlayer} disabled={!name}>
                     <FaUserPlus className='lead'/>
                 </Button>
             </InputGroup>
@@ -124,7 +132,7 @@ const Config = props => {
                                   onKeyUp={handleIncrementInputKeyup}/>
                 </FloatingLabel>
 
-                <Button variant='secondary' onClick={handleAddIncrement}>
+                <Button variant='secondary' onClick={handleAddIncrement} disabled={!num}>
                     <FaPlus className='lead'/>
                 </Button>
             </InputGroup>
@@ -155,25 +163,38 @@ const Config = props => {
             }
 
             {props.increments.length > 0 &&
-                <Form.Check
-                    type="checkbox"
-                    label='Include random score button'
-                    onChange={handleRandomizeChange}
-                    checked={props.includeRandomize}
-                />
+                <Form.Group>
+                    <Form.Check
+                        type="checkbox"
+                        label='Include random score button'
+                        onChange={handleRandomizeChange}
+                        checked={props.includeRandomize}
+                        id='randomScore'
+                    />
+                </Form.Group>
             }
 
             <h3 className='lead mt-4'>Optional Features</h3>
 
-            <FloatingLabel
-                controlId="floatingInput"
-                label="Enter a game-winning score"
-            >
-                <Form.Control type="number" placeholder="Enter a game-winning score"
-                              min="0" step="1" pattern="\d*"
-                              defaultValue={props.winScore}
-                              onChange={handleWinInputChange}/>
-            </FloatingLabel>
+            <InputGroup>
+                <FloatingLabel
+                    controlId="floatingInput"
+                    label="Enter a game-winning score"
+                >
+                    <Form.Control type="number" placeholder="Enter a game-winning score"
+                                  min="0" step="1" pattern="\d*"
+                                  defaultValue={props.winScore}
+                                  ref={winInputRef}
+                                  onChange={handleWinInputChange}/>
+                </FloatingLabel>
+
+                <Button variant='secondary'
+                        onClick={handleWinClearBtnClick}
+                        disabled={!props.winScore > 0}
+                >
+                    <MdCancel className='lead'/>
+                </Button>
+            </InputGroup>
 
             {/*<FloatingLabel*/}
             {/*    controlId="floatingInput"*/}

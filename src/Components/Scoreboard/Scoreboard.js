@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import {Badge, Button, Col, Table} from "react-bootstrap";
+import {Badge, Button, Col, Modal, Table} from "react-bootstrap";
 import {MdCancel} from "react-icons/md";
 import {IoEllipsisHorizontalSharp} from "react-icons/io5";
 
@@ -8,6 +8,23 @@ import {RiQuestionMark} from "react-icons/ri";
 
 const Scoreboard = props => {
     const [highScore, setHighScore] = useState();
+    const [showConfirmModal, setShowConfirmModal] = useState(false);
+    const [deleteScorePlayer, setDeleteScorePlayer] = useState();
+    const [deleteScoreIndex, setDeleteScoreIndex] = useState();
+
+    const confirmScoreDelete = (player, index) => {
+        setShowConfirmModal(true);
+        setDeleteScorePlayer(player.name);
+        setDeleteScoreIndex(index);
+    }
+
+    const handleConfirmModalClose = deleteScore => {
+        if (deleteScore) {
+            props.removeScore(deleteScorePlayer, deleteScoreIndex);
+        }
+
+        setShowConfirmModal(false);
+    }
 
     const getScore = scores => {
         if (scores.length) {
@@ -27,10 +44,6 @@ const Scoreboard = props => {
 
     const addScore = (player, amount) => {
         props.addScore(player.name, parseInt(amount));
-    }
-
-    const removeScore = (player, score) => {
-        props.removeScore(player.name, score);
     }
 
     const getRandomScore = () => {
@@ -112,7 +125,7 @@ const Scoreboard = props => {
                                                className='position-relative score-badge fw-normal me-2
                                                 cursor-pointer'
                                                key={Math.random()}
-                                               onClick={() => removeScore(player, i)}
+                                               onClick={() => confirmScoreDelete(player, i)}
                                         >
                                             <span>{score}</span>
                                             <span
@@ -128,6 +141,19 @@ const Scoreboard = props => {
                 ))}
                 </tbody>
             </Table>
+
+            <Modal show={showConfirmModal} onHide={() => handleConfirmModalClose(false)}>
+                <Modal.Header closeButton>
+                    <Modal.Title>For <em>realsies</em>?</Modal.Title>
+                </Modal.Header>
+
+                <Modal.Body>Are you sure you want to delete this score?</Modal.Body>
+
+                <Modal.Footer>
+                    <Button variant="danger" onClick={() => handleConfirmModalClose(true)}>Yep!</Button>
+                    <Button variant="secondary" onClick={() => handleConfirmModalClose(false)}>Nope</Button>
+                </Modal.Footer>
+            </Modal>
         </Col>
     )
 }
