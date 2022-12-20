@@ -57,7 +57,7 @@ function App() {
             <Row className='align-items-center'>
                 <Col>
                     <div className='text-center py-3'>
-                        <h1 className='display-5 fst-italic text-primary mb-0 text-nowrap'>Scorekeeper DeLuxe</h1>
+                        <h1 className='display-5 fst-italic text-primary mb-0 text-nowrap'>Scorekeeper De Luxe</h1>
                         <span className='text-nowrap text-muted'>A SeaBee Software Production</span>
                     </div>
                 </Col>

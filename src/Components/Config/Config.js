@@ -140,12 +140,15 @@ const Config = props => {
             }
 
             {props.increments.length > 0 &&
-                <Form.Check
-                    type="checkbox"
-                    label='Include random score button'
-                    onChange={handleRandomizeChange}
-                    checked={props.includeRandomize}
-                />
+                <Form.Group>
+                    <Form.Check
+                        type="checkbox"
+                        label='Include random score button'
+                        onChange={handleRandomizeChange}
+                        checked={props.includeRandomize}
+                        id='randomScore'
+                    />
+                </Form.Group>
             }
         </>
     )
