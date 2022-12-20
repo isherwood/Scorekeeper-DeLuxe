@@ -168,8 +168,8 @@ const Config = props => {
                 label="Enter a game-winning score"
             >
                 <Form.Control type="number" placeholder="Enter a game-winning score"
-                              value={props.winScore}
                               min="0" step="1" pattern="\d*"
+                              defaultValue={props.winScore}
                               onChange={handleWinInputChange}/>
             </FloatingLabel>
 

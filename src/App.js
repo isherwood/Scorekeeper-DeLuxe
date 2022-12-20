@@ -70,14 +70,24 @@ function App() {
             <Row className='align-items-center'>
                 <Col className='col-12 col-sm-auto order-1'>
                     <div className='text-center py-3'>
-                        <h1 className='display-5 fst-italic text-primary mb-0 text-nowrap'>Scorekeeper DeLuxe</h1>
+                        <h1 className='display-5 fst-italic text-primary mb-0 text-nowrap'>Scorekeeper De Luxe</h1>
                         <span className='text-nowrap text-muted'>A SeaBee Software Production</span>
                     </div>
                 </Col>
 
                 <Col className='col-9 col-sm-12 col-md-auto order-2 order-sm-last order-md-2 ms-auto pb-sm-3 pb-md-0
                  text-start text-sm-center'>
-                    {winner && <div className='display-6 text-danger text-bold ms-3 ms-sm-0'>{winner} wins!</div>}
+                    {winScore > 0 && !winner && !showOffCanvas &&
+                        <div className='display-6 text-secondary ms-3 ms-sm-0 text-nowrap'>
+                            First to {winScore} wins
+                        </div>
+                    }
+
+                    {winner &&
+                        <div className='display-6 text-danger text-bold ms-3 ms-sm-0 text-nowrap'>
+                            {winner} wins!
+                        </div>
+                    }
                 </Col>
 
                 <Col className='col-3 col-sm-auto order-3 ms-auto text-end'>
