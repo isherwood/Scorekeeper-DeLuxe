@@ -39,6 +39,8 @@ const Config = props => {
 
     const handleWinInputChange = event => {
         if (event.currentTarget.checkValidity()) {
+            props.unlockWinner();
+            props.clearWinner();
             props.setWinScore(event.target.value);
         }
     }

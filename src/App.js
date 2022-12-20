@@ -112,6 +112,8 @@ function App() {
                                 setRandomize={val => setIncludeRandomize(val)}
                                 winScore={winScore}
                                 setWinScore={val => handleSetWinScore(val)}
+                                unlockWinner={() => setWinnerLocked(false)}
+                                clearWinner={() => setWinner(false)}
                             />
                         </Offcanvas.Body>
                     </Offcanvas>
