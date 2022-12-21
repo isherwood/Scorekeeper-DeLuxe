@@ -106,14 +106,15 @@ const Scoreboard = props => {
 
                                 <span className='text-nowrap'>
                                     {player.scores.length < 1 &&
+                                        // layout height spacer
                                         <Badge className='opacity-0'>0</Badge>
                                     }
 
                                     {player.scores.length > 0 && player.scores.map((score, i) => (
                                         // Note: all but last few hidden with CSS
-                                        <Badge bg='secondary'
-                                               className='position-relative score-badge fw-normal me-2
-                                                cursor-pointer'
+                                        <Button variant='secondary' size='sm'
+                                               className='position-relative score-btn fw-normal me-2 py-0 border-0
+                                                overflow-hidden'
                                                key={Math.random()}
                                                onClick={() => confirmScoreDelete(player, i)}
                                         >
@@ -122,7 +123,7 @@ const Scoreboard = props => {
                                                 className='bg-danger position-absolute start-0 top-0 w-100 h-100 d-none'>
                                             <MdCancel color='white'/>
                                         </span>
-                                        </Badge>
+                                        </Button>
                                     ))}
                                 </span>
                             </td>

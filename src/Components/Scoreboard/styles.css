@@ -29,29 +29,48 @@
     top: 1px; /* deal with Bootstrap's cell border-bottom-width */
 }
 
-.badge.score-badge {
+.btn.score-btn {
     display: none;
 }
 
-.badge.score-badge:last-child,
-.badge.score-badge:nth-last-child(2),
-.badge.score-badge:nth-last-child(3),
-.badge.score-badge:nth-last-child(4),
-.badge.score-badge:nth-last-child(5) {
+.btn.score-btn:last-child,
+.btn.score-btn:nth-last-child(2),
+.btn.score-btn:nth-last-child(3),
+.btn.score-btn:nth-last-child(4),
+.btn.score-btn:nth-last-child(5) {
     display: inline-block;
 }
 
-.score-badge:hover {
+.score-btn:hover {
     cursor: pointer;
 }
 
-.score-badge:hover span:last-child {
+.score-btn:hover span:last-child {
     display: flex !important;
     align-items: center;
     justify-content: center;
     border-radius: var(--bs-badge-border-radius);
 }
 
-.score-badge span {
-    font-weight: bold;
+.winner-alert {
+    opacity: 0;
+    animation: opacityInOutIn;
+    animation-duration: .5s;
+    animation-delay: .5s;
+    animation-fill-mode: forwards;
+}
+
+@keyframes opacityInOutIn {
+    0% {
+        opacity: 0;
+    }
+    33% {
+        opacity: .65;
+    }
+    67% {
+        opacity: 0;
+    }
+    100% {
+        opacity: .65;
+    }
 }
