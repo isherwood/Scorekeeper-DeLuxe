@@ -67,6 +67,7 @@ const Scoreboard = props => {
         const range = absLowestScore + highestScore;
         let rightVal = 100;
         let widthVal = 0;
+        let opacityVal = 0;
 
         if (absLowestScore > 0) {
             rightVal = 100 - absLowestScore / range * 100;
@@ -74,6 +75,7 @@ const Scoreboard = props => {
             if (score < 0) {
                 const lag = absLowestScore + score;
                 widthVal = 100 - rightVal;
+                opacityVal = 1;
 
                 if (lag > 0) {
                     widthVal = widthVal * (absLowestScore - lag) / absLowestScore;
@@ -83,7 +85,8 @@ const Scoreboard = props => {
 
         return {
             width: widthVal + '%',
-            right: rightVal + '%'
+            right: rightVal + '%',
+            opacity: opacityVal
         }
     }
 
@@ -93,6 +96,7 @@ const Scoreboard = props => {
         const range = absLowestScore + highestScore;
         let leftVal = 0;
         let widthVal = 0;
+        let opacityVal = 0;
 
         if (absLowestScore > 0) {
             leftVal = absLowestScore / range * 100;
@@ -101,6 +105,7 @@ const Scoreboard = props => {
         if (score > 0) {
             const lag = highestScore - score;
             widthVal = 100 - leftVal;
+            opacityVal = 1;
 
             if (lag > 0) {
                 widthVal = widthVal * (highestScore - lag) / highestScore;
@@ -109,7 +114,8 @@ const Scoreboard = props => {
 
         return {
             left: leftVal + '%',
-            width: widthVal + '%'
+            width: widthVal + '%',
+            opacity: opacityVal
         }
     }
 
