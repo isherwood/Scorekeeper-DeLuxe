@@ -61,7 +61,7 @@ const Config = props => {
         }
     }
 
-    const handleAlphaChange = event => {
+    const handlePlayerSortChange = event => {
         props.setSortPlayers(event.currentTarget.checked);
     }
 
@@ -102,9 +102,9 @@ const Config = props => {
                         <Form.Check
                             type="checkbox"
                             label='Alphabetize players'
-                            onChange={handleAlphaChange}
+                            onChange={handlePlayerSortChange}
                             checked={props.sortPlayers}
-                            id='randomScore'
+                            id='sortPlayers'
                         />
                     </Form.Group>
 
