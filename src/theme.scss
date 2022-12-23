@@ -7,3 +7,8 @@ $theme-colors: (
 );
 
 @import '~bootstrap/scss/bootstrap.scss';
+
+.display-7 {
+  font-size: 1.5rem;
+  font-weight: 300;
+}

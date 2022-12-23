@@ -50,6 +50,12 @@ const Scoreboard = props => {
         return props.increments[Math.floor(Math.random() * props.increments.length)];
     }
 
+    const alphaSort = (a, b) => {
+        if (props.sortPlayers) {
+            return a.name.localeCompare(b.name);
+        }
+    }
+
     useEffect(() => {
         let highestVal = 0;
 
@@ -68,7 +74,7 @@ const Scoreboard = props => {
         <Col>
             <Table className='score-table w-100 v-align-middle'>
                 <tbody>
-                {props.players.map(player => (
+                {[...props.players].sort(alphaSort).map(player => (
                     <React.Fragment key={player.name}>
                         <tr className='position-relative'>
                             <td rowSpan='2' className='table-cell-min display-6 px-3 text-center'>

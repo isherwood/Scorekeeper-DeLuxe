@@ -8,6 +8,7 @@ import Scoreboard from './Components/Scoreboard/Scoreboard'
 function App() {
     const [showOffCanvas, setShowOffCanvas] = useState(true);
     const [players, setPlayers] = useState([]);
+    const [sortPlayers, setSortPlayers] = useState(false);
     const [increments, setIncrements] = useState([1, 5]);
     const [includeRandomize, setIncludeRandomize] = useState(false);
 
@@ -39,7 +40,6 @@ function App() {
         const updatedPlayer = updatedPlayers.filter(player => player.name === name)[0];
 
         updatedPlayer.scores = [...updatedPlayer.scores, amount];
-
         setPlayers(updatedPlayers);
     }
 
@@ -50,6 +50,20 @@ function App() {
         updatedPlayer.scores.splice(index, 1);
 
         setPlayers(updatedPlayers);
+    }
+
+    const handleRandomizePlayers = () => {
+        setPlayers(shuffle([...players]));
+    }
+
+    // randomize array element order
+    const shuffle = array => {
+        for (let i = array.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [array[i], array[j]] = [array[j], array[i]];
+        }
+
+        return array;
     }
 
     return (
@@ -77,6 +91,9 @@ function App() {
                                 players={players}
                                 addPlayer={handleAddPlayer}
                                 removePlayer={handleRemovePlayer}
+                                sortPlayers={sortPlayers}
+                                setSortPlayers={val => setSortPlayers(val)}
+                                randomizePlayers={handleRandomizePlayers}
                                 increments={increments}
                                 addIncrement={handleAddIncrement}
                                 removeIncrement={handleRemoveIncrement}
@@ -92,6 +109,7 @@ function App() {
                 {players.length > 0 && increments.length > 0 &&
                     <Scoreboard
                         players={players}
+                        sortPlayers={sortPlayers}
                         increments={increments}
                         addScore={handleAddScore}
                         removeScore={handleRemoveScore}

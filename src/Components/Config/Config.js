@@ -51,7 +51,7 @@ const Config = props => {
         }
     }
 
-    const handleRandomizeChange = event => {
+    const handleRandomScoreChange = event => {
         if (event.currentTarget.checked) {
             props.setRandomize(true);
         } else if (event.currentTarget.classList.contains('badge')) {
@@ -61,11 +61,26 @@ const Config = props => {
         }
     }
 
+    const handleAlphaChange = event => {
+        props.setSortPlayers(event.currentTarget.checked);
+    }
+
+    const handleRandomPlayers = () => {
+        props.randomizePlayers();
+        props.setSortPlayers(false);
+    }
+
+    const alphaSort = (a, b) => {
+        if (props.sortPlayers) {
+            return a.name.localeCompare(b.name);
+        }
+    }
+
     return (
         <>
-            <h3 className='lead'>Players</h3>
+            <h3 className='display-7'>Players</h3>
 
-            <InputGroup className="mb-3">
+            <InputGroup>
                 <FloatingLabel
                     controlId="floatingInput"
                     label="Enter a name"
@@ -81,9 +96,25 @@ const Config = props => {
                 </Button>
             </InputGroup>
 
-            {props.players.length > 0 && <p className='form-text m-0'>Click to remove.</p>}
+            {props.players.length > 0 &&
+                <div className='d-flex justify-content-between align-items-center mt-2'>
+                    <Form.Group>
+                        <Form.Check
+                            type="checkbox"
+                            label='Alphabetize players'
+                            onChange={handleAlphaChange}
+                            checked={props.sortPlayers}
+                            id='randomScore'
+                        />
+                    </Form.Group>
 
-            {props.players.map(player => (
+                    <Button variant='outline-primary' size='sm' onClick={handleRandomPlayers}>Randomize players</Button>
+                </div>
+            }
+
+            {props.players.length > 0 && <p className='form-text mb-0'>Click to remove.</p>}
+
+            {[...props.players].sort(alphaSort).map(player => (
                 <span
                     className='badge bg-primary position-relative inc-badge fw-normal me-2 my-1 px-3 cursor-pointer overflow-hidden'
                     key={player.name}
@@ -95,9 +126,9 @@ const Config = props => {
                 </span>
             ))}
 
-            <h3 className='lead mt-4'>Score Increments</h3>
+            <h3 className='display-7 mt-3 pt-3 border-top'>Scoring</h3>
 
-            <InputGroup className="mb-3">
+            <InputGroup className="mb-2">
                 <FloatingLabel
                     controlId="floatingInput"
                     label="Enter a unique whole number"
@@ -113,6 +144,18 @@ const Config = props => {
                     <FaPlus className='lead'/>
                 </Button>
             </InputGroup>
+
+            {props.increments.length > 0 &&
+                <Form.Group className='mb-2'>
+                    <Form.Check
+                        type="checkbox"
+                        label='Include random score button'
+                        onChange={handleRandomScoreChange}
+                        checked={props.includeRandomize}
+                        id='randomScore'
+                    />
+                </Form.Group>
+            }
 
             {props.increments.length > 0 && <p className='form-text m-0'>Click to remove.</p>}
 
@@ -131,24 +174,12 @@ const Config = props => {
             {props.includeRandomize &&
                 <span
                     className='badge bg-primary position-relative inc-badge fw-normal me-2 my-1 px-3 cursor-pointer overflow-hidden'
-                    onClick={handleRandomizeChange}>
+                    onClick={handleRandomScoreChange}>
                     <span className='lead'>?</span>
                     <span className='lead bg-danger position-absolute start-0 top-0 w-100 h-100 d-none'>
                         <MdCancel color='white'/>
                     </span>
                 </span>
-            }
-
-            {props.increments.length > 0 &&
-                <Form.Group>
-                    <Form.Check
-                        type="checkbox"
-                        label='Include random score button'
-                        onChange={handleRandomizeChange}
-                        checked={props.includeRandomize}
-                        id='randomScore'
-                    />
-                </Form.Group>
             }
         </>
     )
