@@ -96,14 +96,14 @@ const Scoreboard = props => {
 
         if (absLowestScore > 0) {
             leftVal = absLowestScore / range * 100;
+        }
 
-            if (score >= 0) {
-                const lag = highestScore - score;
-                widthVal = 100 - leftVal;
+        if (score > 0) {
+            const lag = highestScore - score;
+            widthVal = 100 - leftVal;
 
-                if (lag > 0) {
-                    widthVal = widthVal * (highestScore - lag) / highestScore;
-                }
+            if (lag > 0) {
+                widthVal = widthVal * (highestScore - lag) / highestScore;
             }
         }
 

@@ -9,7 +9,7 @@ function App() {
     const [showOffCanvas, setShowOffCanvas] = useState(true);
     const [players, setPlayers] = useState([]);
     const [sortPlayers, setSortPlayers] = useState(false);
-    const [increments, setIncrements] = useState([1, 5]);
+    const [increments, setIncrements] = useState([-5, -1, 1, 5]);
     const [includeRandomize, setIncludeRandomize] = useState(false);
 
     const handleCloseOffCanvas = () => setShowOffCanvas(false);
