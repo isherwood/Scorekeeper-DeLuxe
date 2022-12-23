@@ -96,7 +96,7 @@ const Config = props => {
                 </Button>
             </InputGroup>
 
-            {props.players.length > 0 &&
+            {props.players.length > 1 &&
                 <div className='d-flex justify-content-between align-items-center mt-2'>
                     <Form.Group>
                         <Form.Check
