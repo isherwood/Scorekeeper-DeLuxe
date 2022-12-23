@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, {useState} from "react";
 import {Badge, Button, Col, Modal, Table} from "react-bootstrap";
 import {MdCancel} from "react-icons/md";
 import {IoEllipsisHorizontalSharp} from "react-icons/io5";
@@ -7,7 +7,6 @@ import './styles.css';
 import {RiQuestionMark} from "react-icons/ri";
 
 const Scoreboard = props => {
-    const [highScore, setHighScore] = useState();
     const [showConfirmModal, setShowConfirmModal] = useState(false);
     const [deleteScorePlayer, setDeleteScorePlayer] = useState();
     const [deleteScoreIndex, setDeleteScoreIndex] = useState();
@@ -34,11 +33,83 @@ const Scoreboard = props => {
         return 0;
     }
 
-    const getRowStyles = score => {
-        let portion = score / highScore * 100;
+    const getLowestScore = () => {
+        let lowestScore = 0;
+
+        props.players.forEach(player => {
+            const playerScore = getScore(player.scores);
+
+            if (playerScore < lowestScore) {
+                lowestScore = playerScore;
+            }
+        });
+
+        return lowestScore;
+    }
+
+    const getHighestScore = () => {
+        let highestScore = 0;
+
+        props.players.forEach(player => {
+            const playerScore = getScore(player.scores);
+
+            if (playerScore > highestScore) {
+                highestScore = playerScore;
+            }
+        });
+
+        return highestScore;
+    }
+
+    const getNegRowStyles = score => {
+        const absLowestScore = 0 - getLowestScore();
+        const highestScore = getHighestScore();
+        const range = absLowestScore + highestScore;
+        let rightVal = 100;
+        let widthVal = 0;
+
+        if (absLowestScore > 0) {
+            rightVal = 100 - absLowestScore / range * 100;
+
+            if (score < 0) {
+                const lag = absLowestScore + score;
+                widthVal = 100 - rightVal;
+
+                if (lag > 0) {
+                    widthVal = widthVal * (absLowestScore - lag) / absLowestScore;
+                }
+            }
+        }
 
         return {
-            width: portion + '%'
+            width: widthVal + '%',
+            right: rightVal + '%'
+        }
+    }
+
+    const getPosRowStyles = score => {
+        const absLowestScore = 0 - getLowestScore();
+        const highestScore = getHighestScore();
+        const range = absLowestScore + highestScore;
+        let leftVal = 0;
+        let widthVal = 0;
+
+        if (absLowestScore > 0) {
+            leftVal = absLowestScore / range * 100;
+
+            if (score >= 0) {
+                const lag = highestScore - score;
+                widthVal = 100 - leftVal;
+
+                if (lag > 0) {
+                    widthVal = widthVal * (highestScore - lag) / highestScore;
+                }
+            }
+        }
+
+        return {
+            left: leftVal + '%',
+            width: widthVal + '%'
         }
     }
 
@@ -56,20 +127,6 @@ const Scoreboard = props => {
         }
     }
 
-    useEffect(() => {
-        let highestVal = 0;
-
-        props.players.forEach(player => {
-            const score = getScore(player.scores);
-
-            if (score > highestVal) {
-                highestVal = score;
-            }
-
-            setHighScore(highestVal);
-        });
-    }, [props.players]);
-
     return (
         <Col>
             <Table className='score-table w-100 v-align-middle'>
@@ -78,19 +135,23 @@ const Scoreboard = props => {
                     <React.Fragment key={player.name}>
                         <tr className='position-relative'>
                             <td rowSpan='2' className='table-cell-min display-6 px-3 text-center'>
-                                <div className='score-bg-upper position-absolute'
-                                     style={getRowStyles(getScore(player.scores))}></div>
+                                <div className='score-bg-upper position-absolute'>
+                                    <div className='score-neg' style={getNegRowStyles(getScore(player.scores))}></div>
+                                    <div className='score-pos' style={getPosRowStyles(getScore(player.scores))}></div>
+                                </div>
                                 {player.name}
                             </td>
 
                             <td className='p-1'>
                                 {props.increments.map(num => (
                                     <Button variant='primary' className='m-1' key={Math.random()}
-                                            onClick={() => addScore(player, num)}>+{num}</Button>
+                                            onClick={() => addScore(player, num)}>
+                                        {num > 0 && '+'}{num}
+                                    </Button>
                                 ))}
 
                                 {props.includeRandomize &&
-                                    <Button variant='primary' className='m-1'
+                                    <Button variant='primary' className='random-score-btn m-1'
                                             onClick={() => addScore(player, getRandomScore())}>
                                         +<RiQuestionMark/>
                                     </Button>
@@ -102,11 +163,12 @@ const Scoreboard = props => {
                             </td>
                         </tr>
 
-                        <tr className='position-relative tr-border-bottom'
-                            style={getRowStyles(getScore(player.scores))}>
+                        <tr className='position-relative tr-border-bottom'>
                             <td>
-                                <div className='score-bg-lower position-absolute'
-                                     style={getRowStyles(getScore(player.scores))}></div>
+                                <div className='score-bg-lower position-absolute'>
+                                    <div className='score-neg' style={getNegRowStyles(getScore(player.scores))}></div>
+                                    <div className='score-pos' style={getPosRowStyles(getScore(player.scores))}></div>
+                                </div>
 
                                 {player.scores.length > 5 && <span><IoEllipsisHorizontalSharp/> </span>}
 
@@ -119,10 +181,10 @@ const Scoreboard = props => {
                                     {player.scores.length > 0 && player.scores.map((score, i) => (
                                         // Note: all but last few hidden with CSS
                                         <Button variant='secondary' size='sm'
-                                               className='position-relative score-btn fw-normal me-2 py-0 border-0
+                                                className='position-relative score-btn fw-normal me-2 py-0 border-0
                                                 overflow-hidden'
-                                               key={Math.random()}
-                                               onClick={() => confirmScoreDelete(player, i)}
+                                                key={Math.random()}
+                                                onClick={() => confirmScoreDelete(player, i)}
                                         >
                                             <span>{score}</span>
                                             <span

@@ -134,7 +134,7 @@ const Config = props => {
                     label="Enter a unique whole number"
                 >
                     <Form.Control type="number" placeholder="Enter a unique whole number"
-                                  min="0" step="1" pattern="\d*"
+                                  step="1" pattern="\d*"
                                   ref={numInputRef}
                                   onChange={handleIncrementInputChange}
                                   onKeyUp={handleIncrementInputKeyup}/>

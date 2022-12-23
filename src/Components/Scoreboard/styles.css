@@ -18,11 +18,25 @@
 .score-table .score-bg-lower {
     top: -1px; /* deal with Bootstrap's cell border-bottom-width */
     left: 0;
-    width: 0;
+    width: 100%;
     height: calc(100% + 2px); /* deal with Bootstrap's cell border-bottom-width */
     z-index: -1;
+}
+
+.score-table .score-pos,
+.score-table .score-neg {
+    position: absolute;
+    top: 0;
+    height: 100%;
+    left: 0;
+    right: 0;
     background: linear-gradient(to right, #fff 0%, rgba(182, 135, 16, 0.5) 100%);
-    transition: width 0.5s;
+    transition: all 0.5s;
+}
+
+.score-table .score-neg {
+    background: linear-gradient(to left, #fff 0%, rgba(181, 40, 252, 0.5) 100%);
+    left: auto;
 }
 
 .score-table .score-bg-lower {
@@ -50,6 +64,11 @@
     align-items: center;
     justify-content: center;
     border-radius: var(--bs-badge-border-radius);
+}
+
+.random-score-btn svg {
+    margin-top: -2px;
+    margin-left: -3px;
 }
 
 .winner-alert {
