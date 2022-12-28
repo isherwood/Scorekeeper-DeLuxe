@@ -99,6 +99,10 @@ const Scoreboard = props => {
 
                             <td rowSpan='2' className='table-cell-min px-3 text-center'>
                                 <span className='display-5'>{getScore(player.scores)}</span>
+
+                                {props.subscore !== 0 && player === props.currentPlayer &&
+                                    <span className='position-absolute end-0 top-0 me-1 text-muted'>{props.subscore}</span>
+                                }
                             </td>
                         </tr>
 
@@ -113,7 +117,7 @@ const Scoreboard = props => {
                                 <span className='text-nowrap'>
                                     {player.scores.length < 1 &&
                                         // layout height spacer
-                                        <Badge className='opacity-0'>0</Badge>
+                                        <Badge className='opacity-0 cursor-default' aria-hidden='true'>0</Badge>
                                     }
 
                                     {player.scores.length > 0 && player.scores.map((score, i) => (

@@ -11,6 +11,8 @@ function App() {
     const [sortPlayers, setSortPlayers] = useState(false);
     const [increments, setIncrements] = useState([1, 5]);
     const [includeRandomize, setIncludeRandomize] = useState(false);
+    const [currentPlayer, setCurrentPlayer] = useState();
+    const [subscore, setSubscore] = useState(0);
 
     const handleCloseOffCanvas = () => setShowOffCanvas(false);
     const handleShowOffCanvas = () => setShowOffCanvas(true);
@@ -37,7 +39,16 @@ function App() {
 
     const handleAddScore = (name, amount) => {
         const updatedPlayers = [...players];
-        const updatedPlayer = updatedPlayers.filter(player => player.name === name)[0];
+        const player = updatedPlayers.filter(player => player.name === name)[0];
+        const updatedPlayer = player;
+        const samePlayer = player === currentPlayer;
+
+        if (samePlayer) {
+            setSubscore(subscore + amount);
+        } else {
+            setCurrentPlayer(player);
+            setSubscore(amount);
+        }
 
         updatedPlayer.scores = [...updatedPlayer.scores, amount];
         setPlayers(updatedPlayers);
@@ -45,10 +56,18 @@ function App() {
 
     const handleRemoveScore = (name, index) => {
         const updatedPlayers = [...players];
-        const updatedPlayer = updatedPlayers.filter(player => player.name === name)[0];
+        const player = updatedPlayers.filter(player => player.name === name)[0];
+        const updatedPlayer = player;
+        const samePlayer = player === currentPlayer;
+
+        if (samePlayer) {
+            setSubscore(subscore - updatedPlayer.scores[index]);
+        } else {
+            setCurrentPlayer(player);
+            setSubscore(0 - updatedPlayer.scores[index]);
+        }
 
         updatedPlayer.scores.splice(index, 1);
-
         setPlayers(updatedPlayers);
     }
 
@@ -110,9 +129,11 @@ function App() {
                     <Scoreboard
                         players={players}
                         sortPlayers={sortPlayers}
+                        currentPlayer={currentPlayer}
                         increments={increments}
                         addScore={handleAddScore}
                         removeScore={handleRemoveScore}
+                        subscore={subscore}
                         includeRandomize={includeRandomize}
                     />
                 }
