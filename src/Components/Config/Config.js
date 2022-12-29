@@ -153,7 +153,7 @@ const Config = props => {
                 </span>
             ))}
 
-            <h3 className='display-7 mt-3 pt-3 border-top'>Scoring</h3>
+            <h3 className='display-7 mt-3 pt-3 border-top border-4'>Scoring</h3>
 
             <FloatingLabel controlId="gameConfigs" label="Select a game preset (optional)" className='mb-2'>
                 <Form.Select aria-label="Game presets (optional)"
@@ -220,8 +220,6 @@ const Config = props => {
                 </span>
             }
 
-            <h3 className='display-7 mt-3 pt-3 border-top'>Display</h3>
-
             <Form.Group className='mb-2'>
                 <Form.Check
                     type="checkbox"
@@ -233,7 +231,7 @@ const Config = props => {
             </Form.Group>
 
             {props.players.length > 0 && props.increments.length > 0 &&
-                <div className='d-grid border-top mt-3 pt-3'>
+                <div className='d-grid border-top border-4 mt-3 pt-3'>
                     <Button variant='outline-primary' size='lg' onClick={props.hideOffCanvas}>Play!</Button>
                 </div>
             }
