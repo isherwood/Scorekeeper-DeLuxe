@@ -100,8 +100,10 @@ const Scoreboard = props => {
                             <td rowSpan='2' className='table-cell-min px-3 text-center'>
                                 <span className='display-5'>{getScore(player.scores)}</span>
 
-                                {props.subscore !== 0 && player === props.currentPlayer && props.showSubscore &&
-                                    <span className='position-absolute end-0 top-0 me-1 text-muted'>{props.subscore}</span>
+                                {props.subscore !== 0 && props.players.length > 1 && player === props.currentPlayer
+                                    && props.showSubscore &&
+                                    <span
+                                        className='position-absolute end-0 top-0 me-1 text-muted'>{props.subscore}</span>
                                 }
                             </td>
                         </tr>
@@ -123,10 +125,10 @@ const Scoreboard = props => {
                                     {player.scores.length > 0 && player.scores.map((score, i) => (
                                         // Note: all but last few hidden with CSS
                                         <Button variant='secondary' size='sm'
-                                               className='position-relative score-btn fw-normal me-2 py-0 border-0
+                                                className='position-relative score-btn fw-normal me-2 py-0 border-0
                                                 overflow-hidden'
-                                               key={Math.random()}
-                                               onClick={() => confirmScoreDelete(player, i)}
+                                                key={Math.random()}
+                                                onClick={() => confirmScoreDelete(player, i)}
                                         >
                                             <span>{score}</span>
                                             <span

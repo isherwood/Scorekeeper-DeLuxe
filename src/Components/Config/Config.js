@@ -14,6 +14,9 @@ const Config = props => {
 
     const gamePresets = [
         {
+            name: "None",
+            scores: []
+        }, {
             name: "Cribbage",
             scores: [1, 5, 10]
         }, {
@@ -159,7 +162,6 @@ const Config = props => {
                 <Form.Select aria-label="Game presets (optional)"
                              value={props.selectedPreset.name}
                              onChange={handlePresetChange}>
-                    <option value=''>None</option>
                     {gamePresets.map(preset => (
                         <option key={preset.name}>{preset.name}</option>
                     ))}
@@ -220,15 +222,17 @@ const Config = props => {
                 </span>
             }
 
-            <Form.Group className='mb-2'>
-                <Form.Check
-                    type="checkbox"
-                    label='Show turn score total'
-                    onChange={handleSubscoreChange}
-                    checked={props.showSubscore}
-                    id='subscore'
-                />
-            </Form.Group>
+            {props.players.length > 1 &&
+                <Form.Group className='mb-2'>
+                    <Form.Check
+                        type="checkbox"
+                        label='Show turn score total'
+                        onChange={handleSubscoreChange}
+                        checked={props.showSubscore}
+                        id='subscore'
+                    />
+                </Form.Group>
+            }
 
             {props.players.length > 0 && props.increments.length > 0 &&
                 <div className='d-grid border-top border-4 mt-3 pt-3'>
