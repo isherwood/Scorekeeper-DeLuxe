@@ -100,7 +100,7 @@ const Scoreboard = props => {
                             <td rowSpan='2' className='table-cell-min px-3 text-center'>
                                 <span className='display-5'>{getScore(player.scores)}</span>
 
-                                {props.subscore !== 0 && player === props.currentPlayer &&
+                                {props.subscore !== 0 && player === props.currentPlayer && props.showSubscore &&
                                     <span className='position-absolute end-0 top-0 me-1 text-muted'>{props.subscore}</span>
                                 }
                             </td>

@@ -9,10 +9,12 @@ function App() {
     const [showOffCanvas, setShowOffCanvas] = useState(true);
     const [players, setPlayers] = useState([]);
     const [sortPlayers, setSortPlayers] = useState(false);
-    const [increments, setIncrements] = useState([1, 5]);
+    const [increments, setIncrements] = useState([]);
     const [includeRandomize, setIncludeRandomize] = useState(false);
     const [currentPlayer, setCurrentPlayer] = useState();
     const [subscore, setSubscore] = useState(0);
+    const [showSubscore, setShowSubscore] = useState(true);
+    const [selectedPreset, setSelectedPreset] = useState({});
 
     const handleCloseOffCanvas = () => setShowOffCanvas(false);
     const handleShowOffCanvas = () => setShowOffCanvas(true);
@@ -30,7 +32,7 @@ function App() {
     }
 
     const handleRemoveIncrement = val => {
-        setIncrements(increments.filter((el) => el !== val));
+        setIncrements(increments.filter(el => el !== val));
     }
 
     const compareIntegers = (a, b) => {
@@ -116,8 +118,14 @@ function App() {
                                 increments={increments}
                                 addIncrement={handleAddIncrement}
                                 removeIncrement={handleRemoveIncrement}
+                                replaceIncrements={scores => setIncrements(scores)}
                                 includeRandomize={includeRandomize}
                                 setRandomize={val => setIncludeRandomize(val)}
+                                showSubscore={showSubscore}
+                                setShowSubscore={val => setShowSubscore(val)}
+                                selectedPreset={selectedPreset}
+                                setSelectedPreset={val => setSelectedPreset(val)}
+                                hideOffCanvas={() => setShowOffCanvas(false)}
                             />
                         </Offcanvas.Body>
                     </Offcanvas>
@@ -135,6 +143,7 @@ function App() {
                         removeScore={handleRemoveScore}
                         subscore={subscore}
                         includeRandomize={includeRandomize}
+                        showSubscore={showSubscore}
                     />
                 }
 

@@ -12,6 +12,22 @@ const Config = props => {
     const nameInputRef = useRef(null);
     const numInputRef = useRef(null);
 
+    const gamePresets = [
+        {
+            name: "Cribbage",
+            scores: [1, 5, 10]
+        }, {
+            name: "Dice / 10,000 / Farkle",
+            scores: [50, 100, 500]
+        }, {
+            name: "Football",
+            scores: [1, 2, 3, 6]
+        }, {
+            name: "Shanghai Rummy",
+            scores: [5, 10, 50, 100]
+        }
+    ];
+
     const handleAddIncrement = () => {
         if (num && !props.increments.includes(parseInt(num))) {
             props.addIncrement(parseInt(num));
@@ -34,6 +50,13 @@ const Config = props => {
         if (event.currentTarget.checkValidity() && event.key === 'Enter') {
             handleAddIncrement();
         }
+    }
+
+    const handlePresetChange = event => {
+        const selectedPreset = gamePresets.find(el => el.name === event.currentTarget.value);
+
+        props.setSelectedPreset(selectedPreset);
+        props.replaceIncrements(selectedPreset.scores);
     }
 
     const handleAddPlayer = () => {
@@ -59,6 +82,10 @@ const Config = props => {
         } else {
             props.setRandomize(false);
         }
+    }
+
+    const handleSubscoreChange = event => {
+        props.setShowSubscore(event.currentTarget.checked);
     }
 
     const handlePlayerSortChange = event => {
@@ -128,6 +155,17 @@ const Config = props => {
 
             <h3 className='display-7 mt-3 pt-3 border-top'>Scoring</h3>
 
+            <FloatingLabel controlId="gameConfigs" label="Select a game preset (optional)" className='mb-2'>
+                <Form.Select aria-label="Game presets (optional)"
+                             value={props.selectedPreset.name}
+                             onChange={handlePresetChange}>
+                    <option value=''>None</option>
+                    {gamePresets.map(preset => (
+                        <option key={preset.name}>{preset.name}</option>
+                    ))}
+                </Form.Select>
+            </FloatingLabel>
+
             <InputGroup className="mb-2">
                 <FloatingLabel
                     controlId="floatingInput"
@@ -145,7 +183,7 @@ const Config = props => {
                 </Button>
             </InputGroup>
 
-            {props.increments.length > 0 &&
+            {props.increments.length > 1 &&
                 <Form.Group className='mb-2'>
                     <Form.Check
                         type="checkbox"
@@ -180,6 +218,24 @@ const Config = props => {
                         <MdCancel color='white'/>
                     </span>
                 </span>
+            }
+
+            <h3 className='display-7 mt-3 pt-3 border-top'>Display</h3>
+
+            <Form.Group className='mb-2'>
+                <Form.Check
+                    type="checkbox"
+                    label='Show turn score total'
+                    onChange={handleSubscoreChange}
+                    checked={props.showSubscore}
+                    id='subscore'
+                />
+            </Form.Group>
+
+            {props.players.length > 0 && props.increments.length > 0 &&
+                <div className='d-grid border-top mt-3 pt-3'>
+                    <Button variant='outline-primary' size='lg' onClick={props.hideOffCanvas}>Play!</Button>
+                </div>
             }
         </>
     )
