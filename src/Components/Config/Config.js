@@ -8,7 +8,6 @@ import './styles.css';
 const Config = props => {
     const [name, setName] = useState('');
     const [num, setNum] = useState('');
-    // const [time, setTime] = useState('');
 
     const nameInputRef = useRef(null);
     const numInputRef = useRef(null);
@@ -52,12 +51,6 @@ const Config = props => {
         props.clearWinner();
         props.setWinScore(null);
     }
-
-    // const handleTimeInputChange = event => {
-    //     if (event.currentTarget.checkValidity()) {
-    //         setTime(event.target.value);
-    //     }
-    // }
 
     const handleAddPlayer = () => {
         if (name && !props.players.filter(player => player.name === name).length) {
@@ -174,7 +167,7 @@ const Config = props => {
                 </Form.Group>
             }
 
-            <h3 className='lead mt-4'>Optional Features</h3>
+            <h3 className='lead mt-4 border-top border-4 pt-3'>Optional Features</h3>
 
             <InputGroup>
                 <FloatingLabel
@@ -195,16 +188,6 @@ const Config = props => {
                     <MdCancel className='lead'/>
                 </Button>
             </InputGroup>
-
-            {/*<FloatingLabel*/}
-            {/*    controlId="floatingInput"*/}
-            {/*    label="Enter a game time in minutes"*/}
-            {/*>*/}
-            {/*    <Form.Control type="number" placeholder="Enter a game time in minutes"*/}
-            {/*                  min="0" step="1" pattern="\d*"*/}
-            {/*                  ref={timeInputRef}*/}
-            {/*                  onChange={handleTimeInputChange}/>*/}
-            {/*</FloatingLabel>*/}
         </>
     )
 }

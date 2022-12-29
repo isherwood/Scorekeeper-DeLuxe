@@ -131,8 +131,8 @@ const Scoreboard = props => {
                                             <span>{score}</span>
                                             <span
                                                 className='bg-danger position-absolute start-0 top-0 w-100 h-100 d-none'>
-                                                <MdCancel color='white'/>
-                                            </span>
+                                            <MdCancel color='white'/>
+                                        </span>
                                         </Button>
                                     ))}
                                 </span>
