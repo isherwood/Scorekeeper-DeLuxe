@@ -4,6 +4,7 @@ import {FaPlus, FaUserPlus} from "react-icons/fa";
 import {MdCancel} from "react-icons/md";
 
 import './styles.css';
+import gamePresets from '../../Services/GamePresets';
 
 const Config = props => {
     const [name, setName] = useState('');
@@ -11,25 +12,6 @@ const Config = props => {
 
     const nameInputRef = useRef(null);
     const numInputRef = useRef(null);
-
-    const gamePresets = [
-        {
-            name: "None",
-            scores: []
-        }, {
-            name: "Cribbage",
-            scores: [1, 5, 10]
-        }, {
-            name: "Dice / 10,000 / Farkle",
-            scores: [50, 100, 500]
-        }, {
-            name: "Football",
-            scores: [1, 2, 3, 6]
-        }, {
-            name: "Shanghai Rummy",
-            scores: [5, 10, 50, 100]
-        }
-    ];
 
     const handleAddIncrement = () => {
         if (num && !props.increments.includes(parseInt(num))) {

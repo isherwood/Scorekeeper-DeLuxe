@@ -2,6 +2,7 @@ import {useState} from 'react';
 import {Button, Col, Container, Offcanvas, Row} from 'react-bootstrap';
 import {MdSettings} from "react-icons/md";
 
+import Utilities from './Services/Utilities';
 import Config from './Components/Config/Config';
 import Scoreboard from './Components/Scoreboard/Scoreboard'
 
@@ -74,17 +75,7 @@ function App() {
     }
 
     const handleRandomizePlayers = () => {
-        setPlayers(shuffle([...players]));
-    }
-
-    // randomize array element order
-    const shuffle = array => {
-        for (let i = array.length - 1; i > 0; i--) {
-            const j = Math.floor(Math.random() * (i + 1));
-            [array[i], array[j]] = [array[j], array[i]];
-        }
-
-        return array;
+        setPlayers(Utilities.shuffleArray([...players]));
     }
 
     return (
