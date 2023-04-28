@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import {Badge, Button, Col, Modal, Table} from "react-bootstrap";
+import {Badge, Button, Col, Modal, OverlayTrigger, Popover, Table} from "react-bootstrap";
 import {MdCancel} from "react-icons/md";
 import {IoEllipsisHorizontalSharp} from "react-icons/io5";
 
@@ -56,6 +56,16 @@ const Scoreboard = props => {
         }
     }
 
+    const scorePopover = scores => (
+        <Popover id="score-popover">
+            <Popover.Body>
+                <b>Score count</b>: {scores.length}
+                <br/>
+                <b>Scores</b>: {scores.join(' ')}
+            </Popover.Body>
+        </Popover>
+    );
+
     useEffect(() => {
         let highestVal = 0;
 
@@ -99,10 +109,6 @@ const Scoreboard = props => {
 
                             <td rowSpan='2' className='table-cell-min px-3 text-center'>
                                 <span className='display-5'>{getScore(player.scores)}</span>
-
-                                {props.subscore !== 0 && player === props.currentPlayer &&
-                                    <span className='position-absolute end-0 top-0 me-1 text-muted'>{props.subscore}</span>
-                                }
                             </td>
                         </tr>
 
@@ -112,21 +118,31 @@ const Scoreboard = props => {
                                 <div className='score-bg-lower position-absolute'
                                      style={getRowStyles(getScore(player.scores))}></div>
 
-                                {player.scores.length > 5 && <span><IoEllipsisHorizontalSharp/> </span>}
+                                {player.scores.length > 5 &&
+                                    <span className='pe-1'>
+                                        <OverlayTrigger overlay={scorePopover(player.scores)}
+                                                        trigger='click'
+                                                        placement='auto'
+                                                        rootClose='true'>
+                                            <button className='btn btn-link p-0'>
+                                                <IoEllipsisHorizontalSharp color='#333'/>
+                                            </button>
+                                        </OverlayTrigger>
+                                    </span>}
 
                                 <span className='text-nowrap'>
                                     {player.scores.length < 1 &&
                                         // layout height spacer
-                                        <Badge className='opacity-0 cursor-default' aria-hidden='true'>0</Badge>
+                                        <Badge className='opacity-0'>0</Badge>
                                     }
 
                                     {player.scores.length > 0 && player.scores.map((score, i) => (
                                         // Note: all but last few hidden with CSS
                                         <Button variant='secondary' size='sm'
-                                               className='position-relative score-btn fw-normal me-2 py-0 border-0
+                                                className='position-relative score-btn fw-normal me-2 py-0 border-0
                                                 overflow-hidden'
-                                               key={Math.random()}
-                                               onClick={() => confirmScoreDelete(player, i)}
+                                                key={Math.random()}
+                                                onClick={() => confirmScoreDelete(player, i)}
                                         >
                                             <span>{score}</span>
                                             <span
