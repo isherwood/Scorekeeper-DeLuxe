@@ -78,6 +78,7 @@ function App() {
     const handleContinueModalYes = () => {
         setContinueGame(true);
         setShowContinueModal(false);
+        setShowOffCanvas(false);
     }
 
     const handleContinueModalNo = () => {
