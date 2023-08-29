@@ -1,18 +1,25 @@
-import {useState} from 'react';
-import {Button, Col, Container, Offcanvas, Row} from 'react-bootstrap';
+import {useEffect, useState} from 'react';
+import {Button, Col, Container, Modal, Offcanvas, Row} from 'react-bootstrap';
 import {MdSettings} from "react-icons/md";
 
 import Config from './Components/Config/Config';
 import Scoreboard from './Components/Scoreboard/Scoreboard'
 
 function App() {
+
+    // get property from local storage object
+    const getItem = key => {
+        const data = JSON.parse(localStorage.getItem('ScorekeeperDeLuxe'));
+        return data ? data[key] : null;
+    }
+
     const [showOffCanvas, setShowOffCanvas] = useState(true);
-    const [players, setPlayers] = useState([]);
-    const [sortPlayers, setSortPlayers] = useState(false);
-    const [increments, setIncrements] = useState([1, 5]);
-    const [includeRandomize, setIncludeRandomize] = useState(false);
-    const [currentPlayer, setCurrentPlayer] = useState();
-    const [subscore, setSubscore] = useState(0);
+    const [players, setPlayers] = useState(getItem('players') || []);
+    const [sortPlayers, setSortPlayers] = useState(getItem('sortPlayers') || false);
+    const [increments, setIncrements] = useState(getItem('increments') || [1, 5]);
+    const [includeRandomize, setIncludeRandomize] = useState(getItem('includeRandomize') || false);
+    const [showContinueModal, setShowContinueModal] = useState(false);
+    const [continueGame, setContinueGame] = useState(false);
 
     const handleCloseOffCanvas = () => setShowOffCanvas(false);
     const handleShowOffCanvas = () => setShowOffCanvas(true);
@@ -39,16 +46,7 @@ function App() {
 
     const handleAddScore = (name, amount) => {
         const updatedPlayers = [...players];
-        const player = updatedPlayers.filter(player => player.name === name)[0];
-        const updatedPlayer = player;
-        const samePlayer = player === currentPlayer;
-
-        if (samePlayer) {
-            setSubscore(subscore + amount);
-        } else {
-            setCurrentPlayer(player);
-            setSubscore(amount);
-        }
+        const updatedPlayer = updatedPlayers.filter(player => player.name === name)[0];
 
         updatedPlayer.scores = [...updatedPlayer.scores, amount];
         setPlayers(updatedPlayers);
@@ -56,18 +54,10 @@ function App() {
 
     const handleRemoveScore = (name, index) => {
         const updatedPlayers = [...players];
-        const player = updatedPlayers.filter(player => player.name === name)[0];
-        const updatedPlayer = player;
-        const samePlayer = player === currentPlayer;
-
-        if (samePlayer) {
-            setSubscore(subscore - updatedPlayer.scores[index]);
-        } else {
-            setCurrentPlayer(player);
-            setSubscore(0 - updatedPlayer.scores[index]);
-        }
+        const updatedPlayer = updatedPlayers.filter(player => player.name === name)[0];
 
         updatedPlayer.scores.splice(index, 1);
+
         setPlayers(updatedPlayers);
     }
 
@@ -84,6 +74,44 @@ function App() {
 
         return array;
     }
+
+    const handleContinueModalYes = () => {
+        setContinueGame(true);
+        setShowContinueModal(false);
+    }
+
+    const handleContinueModalNo = () => {
+        setShowContinueModal(false);
+        localStorage.removeItem('ScorekeeperDeLuxe');
+        window.location.reload();
+    }
+
+    // set state data in local storage
+    useEffect(() => {
+        window.localStorage.setItem('ScorekeeperDeLuxe', JSON.stringify({
+            players: players,
+            sortPlayers: sortPlayers,
+            increments: increments,
+            includeRandomize: includeRandomize
+        }))
+    }, [players, sortPlayers, increments, includeRandomize]);
+
+    useEffect(() => {
+        // check for saved game and prompt for continuation
+        if (getItem('players').length) {
+            setShowContinueModal(true);
+        }
+    }, []);
+
+    // check local storage for app data
+    useEffect(() => {
+        if (continueGame) {
+            if (getItem('players')) setPlayers(getItem('players'));
+            if (getItem('sortPlayers')) setSortPlayers(getItem('sortPlayers'));
+            if (getItem('increments')) setIncrements(getItem('increments'));
+            if (getItem('includeRandomize')) setIncludeRandomize(getItem('includeRandomize'));
+        }
+    }, [continueGame]);
 
     return (
         <Container fluid className='app-container d-flex flex-column vh-100'>
@@ -129,11 +157,9 @@ function App() {
                     <Scoreboard
                         players={players}
                         sortPlayers={sortPlayers}
-                        currentPlayer={currentPlayer}
                         increments={increments}
                         addScore={handleAddScore}
                         removeScore={handleRemoveScore}
-                        subscore={subscore}
                         includeRandomize={includeRandomize}
                     />
                 }
@@ -152,6 +178,19 @@ function App() {
                     </div>
                 }
             </Row>
+
+            <Modal show={showContinueModal} onHide={handleContinueModalNo}>
+                <Modal.Header closeButton>
+                    <Modal.Title>Score Data Found</Modal.Title>
+                </Modal.Header>
+
+                <Modal.Body>Would you like to continue where you left off?</Modal.Body>
+
+                <Modal.Footer>
+                    <Button variant="primary" onClick={handleContinueModalYes}>Yes</Button>
+                    <Button variant="secondary" onClick={handleContinueModalNo}>No</Button>
+                </Modal.Footer>
+            </Modal>
         </Container>
     );
 }
